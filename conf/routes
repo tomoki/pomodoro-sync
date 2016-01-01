@@ -14,3 +14,7 @@ POST        /signUp                          controllers.SignUpController.signUp
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)
 GET         /webjars/*file                   controllers.WebJarAssets.at(file)
+
+# works
+GET         /api_current                     controllers.WorkAPIController.current
+POST        /api_updateCurrent               controllers.WorkAPIController.updateCurrent

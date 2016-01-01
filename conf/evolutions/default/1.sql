@@ -10,6 +10,9 @@ create table "openidinfo" ("id" VARCHAR NOT NULL PRIMARY KEY,"logininfoid" BIGIN
 create table "openidattributes" ("id" VARCHAR NOT NULL,"key" VARCHAR NOT NULL,"value" VARCHAR NOT NULL);
 
 
+create table "current" ("id" VARCHAR NOT NULL PRIMARY KEY, "userID" VARCHAR NOT NULL, "topic" VARCHAR NOT NULL, "startTime" VARCHAR NOT NULL);
+create table "done" ("id" VARCHAR NOT NULL PRIMARY KEY, "userID" VARCHAR NOT NULL, "topic" VARCHAR NOT NULL, "startTime" VARCHAR NOT NULL, "endTime" VARCHAR NOT NULL, "succeeded" BOOLEAN NOT NULL);
+
 # --- !Downs
 
 drop table "openidattributes";
@@ -20,3 +23,5 @@ drop table "passwordinfo";
 drop table "userlogininfo";
 drop table "logininfo";
 drop table "user";
+drop table "current";
+drop table "done";

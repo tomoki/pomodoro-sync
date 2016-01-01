@@ -21,6 +21,7 @@ import com.mohiva.play.silhouette.impl.util._
 import models.User
 import models.daos._
 import models.services.{ UserService, UserServiceImpl }
+import models.services.{ WorkService, WorkServiceImpl }
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 import net.codingwell.scalaguice.ScalaModule
@@ -39,7 +40,9 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
    */
   def configure() {
     bind[UserService].to[UserServiceImpl]
+    bind[WorkService].to[WorkServiceImpl]
     bind[UserDAO].to[UserDAOImpl]
+    bind[WorkDAO].to[WorkDAOImpl]
     bind[DelegableAuthInfoDAO[PasswordInfo]].to[PasswordInfoDAO]
     bind[DelegableAuthInfoDAO[OAuth1Info]].to[OAuth1InfoDAO]
     bind[DelegableAuthInfoDAO[OAuth2Info]].to[OAuth2InfoDAO]
@@ -106,13 +109,13 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
     yahooProvider: YahooProvider): SocialProviderRegistry = {
 
     SocialProviderRegistry(Seq(
-      googleProvider,
-      facebookProvider,
-      twitterProvider,
-      vkProvider,
-      xingProvider,
-      yahooProvider,
-      clefProvider
+      googleProvider
+      // facebookProvider,
+      // twitterProvider,
+      // vkProvider,
+      // xingProvider,
+      // yahooProvider,
+      // clefProvider
     ))
   }
 

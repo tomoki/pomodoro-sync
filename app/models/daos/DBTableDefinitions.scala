@@ -28,6 +28,39 @@ trait DBTableDefinitions {
     def * = (id, firstName, lastName, fullName, email, avatarURL) <> (DBUser.tupled, DBUser.unapply)
   }
 
+  case class DBCurrent (
+    id:        String,
+    userID:    String,
+    topic:     String,
+    startTime: String
+  )
+
+  class Currents(tag: Tag) extends Table[DBCurrent](tag, "current") {
+    def id        = column[String]("id")
+    def userID    = column[String]("userID")
+    def topic     = column[String]("topic")
+    def startTime = column[String]("startTime")
+    def * = (id, userID, topic, startTime) <> (DBCurrent.tupled, DBCurrent.unapply)
+  }
+  case class DBDone (
+    id:        String,
+    userID:    String,
+    topic:     String,
+    startTime: String,
+    endTime:   String,
+    succeeded: Boolean
+  )
+
+  class Dones(tag: Tag) extends Table[DBDone](tag, "done") {
+    def id        = column[String]("id")
+    def userID    = column[String]("userID")
+    def topic     = column[String]("topic")
+    def startTime = column[String]("startTime")
+    def endTime   = column[String]("endTime")
+    def succeeded = column[Boolean]("succeeded")
+    def * = (id, userID, topic, startTime, endTime, succeeded) <> (DBDone.tupled, DBDone.unapply)
+  }
+
   case class DBLoginInfo (
     id: Option[Long],
     providerID: String,
@@ -134,7 +167,10 @@ trait DBTableDefinitions {
   val slickOAuth2Infos = TableQuery[OAuth2Infos]
   val slickOpenIDInfos = TableQuery[OpenIDInfos]
   val slickOpenIDAttributes = TableQuery[OpenIDAttributes]
-  
+
+  val slickCurrents = TableQuery[Currents]
+  val slickDones    = TableQuery[Dones]
+
   // queries used in multiple places
   def loginInfoQuery(loginInfo: LoginInfo) = 
     slickLoginInfos.filter(dbLoginInfo => dbLoginInfo.providerID === loginInfo.providerID && dbLoginInfo.providerKey === loginInfo.providerKey)
