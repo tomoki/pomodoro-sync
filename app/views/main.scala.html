@@ -1,3 +1,39 @@
+@(title: String, scripts: Html = Html(""), user: Option[models.User] = None)(content: Html)(implicit messages: Messages)
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@title</title>
+    <link rel="stylesheet" href="@routes.Assets.at("styles/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <div class="header">
+    <div class="header-left">
+      <a class="header-link" href="@routes.ApplicationController.index">
+        <img src="@routes.Assets.at("images/logo_with_text.png")" alt="Pomodoro Sync" height="32" border="0">
+      </a>
+    </div>
+    <div class="header-right">
+      @user.map { u =>
+        <a href="@routes.ApplicationController.signOut">@Messages("sign.out")</a>
+      }.getOrElse {
+        <a href="@routes.ApplicationController.signIn">@Messages("sign.in")</a>
+      }
+    </div>
+  </div>
+  <div class="contents">
+    @content
+  </div>
+  <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))"></script>
+  <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))"></script>
+  <script type="text/javascript" src="@routes.Assets.at("js/api.js")"></script>
+  @scripts
+</html>
+
+@**********************************
+
 @(title: String, user: Option[models.User] = None)(content: Html)(implicit messages: Messages)
 
 <!DOCTYPE html>
@@ -57,3 +93,5 @@
         <script type="text/javascript" src="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))"></script>
     </body>
 </html>
+
+**********************************@
