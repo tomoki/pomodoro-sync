@@ -19,6 +19,7 @@ import com.mohiva.play.silhouette.impl.repositories.DelegableAuthInfoRepository
 import com.mohiva.play.silhouette.impl.services._
 import com.mohiva.play.silhouette.impl.util._
 import models.User
+import models.{TimeConstants, TimeConstantsImpl}
 import models.daos._
 import models.services.{ UserService, UserServiceImpl }
 import models.services.{ WorkService, WorkServiceImpl }
@@ -43,6 +44,7 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
     bind[WorkService].to[WorkServiceImpl]
     bind[UserDAO].to[UserDAOImpl]
     bind[WorkDAO].to[WorkDAOImpl]
+    bind[TimeConstants].to[TimeConstantsImpl]
     bind[DelegableAuthInfoDAO[PasswordInfo]].to[PasswordInfoDAO]
     bind[DelegableAuthInfoDAO[OAuth1Info]].to[OAuth1InfoDAO]
     bind[DelegableAuthInfoDAO[OAuth2Info]].to[OAuth2InfoDAO]
