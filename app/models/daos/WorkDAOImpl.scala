@@ -20,12 +20,12 @@ class WorkDAOImpl @Inject()(
     db.run(query.result.headOption).map { dbCurrentOption =>
       dbCurrentOption.map { dbCurrent =>
         Current(UUID.fromString(dbCurrent.id), UUID.fromString(dbCurrent.userID),
-                dbCurrent.topic, ZonedDateTime.parse(dbCurrent.startTime))
+                dbCurrent.topic, dbCurrent.startTime, dbCurrent.scheduledEndTime)
       }
     }
   }
-  def updateCurrent(id: UUID, userID: UUID, topic: String, startTime: ZonedDateTime) : Future[Current] = {
-    val newDBCurrent = DBCurrent(id.toString, userID.toString, topic, startTime.toString)
+  def updateCurrent(id: UUID, userID: UUID, topic: String, startTime: Long, scheduledEndTime: Long) : Future[Current] = {
+    val newDBCurrent = DBCurrent(id.toString, userID.toString, topic, startTime, scheduledEndTime)
     val query = slickCurrents += (newDBCurrent)
     db.run(query).flatMap { _ => getCurrent(userID).map(_.get)}
   }

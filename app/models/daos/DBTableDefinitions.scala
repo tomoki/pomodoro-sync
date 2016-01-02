@@ -29,25 +29,27 @@ trait DBTableDefinitions {
   }
 
   case class DBCurrent (
-    id:        String,
-    userID:    String,
-    topic:     String,
-    startTime: String
+    id:               String,
+    userID:           String,
+    topic:            String,
+    startTime:        Long,
+    scheduledEndTime: Long
   )
 
   class Currents(tag: Tag) extends Table[DBCurrent](tag, "current") {
-    def id        = column[String]("id")
-    def userID    = column[String]("userID")
-    def topic     = column[String]("topic")
-    def startTime = column[String]("startTime")
-    def * = (id, userID, topic, startTime) <> (DBCurrent.tupled, DBCurrent.unapply)
+    def id               = column[String]("id")
+    def userID           = column[String]("userID")
+    def topic            = column[String]("topic")
+    def startTime        = column[Long]("startTime")
+    def scheduledEndTime = column[Long]("scheduledEndTime")
+    def * = (id, userID, topic, startTime, scheduledEndTime) <> (DBCurrent.tupled, DBCurrent.unapply)
   }
   case class DBDone (
     id:        String,
     userID:    String,
     topic:     String,
-    startTime: String,
-    endTime:   String,
+    startTime: Long,
+    endTime:   Long,
     succeeded: Boolean
   )
 
@@ -55,8 +57,8 @@ trait DBTableDefinitions {
     def id        = column[String]("id")
     def userID    = column[String]("userID")
     def topic     = column[String]("topic")
-    def startTime = column[String]("startTime")
-    def endTime   = column[String]("endTime")
+    def startTime = column[Long]("startTime")
+    def endTime   = column[Long]("endTime")
     def succeeded = column[Boolean]("succeeded")
     def * = (id, userID, topic, startTime, endTime, succeeded) <> (DBDone.tupled, DBDone.unapply)
   }

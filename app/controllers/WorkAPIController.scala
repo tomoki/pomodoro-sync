@@ -38,18 +38,19 @@ class WorkAPIController @Inject() (
   }
   def toJSON(work: Work) : JsValue =
     work match {
-      case Current(id, userID, topic, startTime) =>
+      case Current(id, userID, topic, startTime, scheduledEndTime) =>
         Json.obj(
           "id"        -> id.toString,
           "topic"     -> topic,
-          "startTime" -> startTime.toEpochSecond()
+          "startTime" -> startTime,
+          "scheduledEndTime" -> scheduledEndTime
         )
       case Done(id, userID, topic, startTime, endTime, succeeded) =>
         Json.obj(
           "id"        -> id.toString,
           "topic"     -> topic,
-          "startTime" -> startTime.toEpochSecond(),
-          "endTime"   -> endTime.toEpochSecond(),
+          "startTime" -> startTime,
+          "endTime"   -> endTime,
           "succeeded" -> succeeded
         )
     }
@@ -79,12 +80,13 @@ class WorkAPIController @Inject() (
         val data   = request.body.asFormUrlEncoded
         data match {
           case Some(data_map) if data_map.contains("topic") => {
-            val id        = UUID.randomUUID()
-            val userID    = request.identity.userID
-            val topic     = data_map("topic").mkString("") // ????
-            val startTime = ZonedDateTime.now()
+            val id               = UUID.randomUUID()
+            val userID           = request.identity.userID
+            val topic            = data_map("topic").mkString("") // ????
+            val startTime        = ZonedDateTime.now().toEpochSecond
+            val scheduledEndTime = startTime + 1500
 
-            workService.updateCurrent(id, userID, topic, startTime).flatMap(current =>
+            workService.updateCurrent(id, userID, topic, startTime, scheduledEndTime).flatMap(current =>
               Future.successful(Ok(toJSON(current).toString)))
           }
           case None => {

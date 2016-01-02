@@ -7,5 +7,5 @@ import scala.concurrent.Future
 
 trait WorkDAO {
   def getCurrent(userID: UUID) : Future[Option[Current]]
-  def updateCurrent(id: UUID, userID: UUID, topic: String, startTime: ZonedDateTime) : Future[Current]
+  def updateCurrent(id: UUID, userID: UUID, topic: String, startTime: Long, scheduledEndTime: Long) : Future[Current]
 }

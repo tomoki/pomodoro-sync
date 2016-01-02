@@ -7,16 +7,17 @@ sealed trait Work {
   val id:        UUID
   val userID:    UUID
   val topic:     String
-  val startTime: ZonedDateTime
+  val startTime: Long
 }
 case class Current(id:        UUID,
                    userID:    UUID,
                    topic:     String,
-                   startTime: ZonedDateTime) extends Work
+                   startTime: Long,
+                   scheduledEndTime: Long) extends Work
 
 case class Done(id:        UUID,
                 userID:    UUID,
                 topic:     String,
-                startTime: ZonedDateTime,
-                endTime:   ZonedDateTime,
+                startTime: Long,
+                endTime:   Long,
                 succeeded: Boolean) extends Work
