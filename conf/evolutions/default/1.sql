@@ -10,8 +10,8 @@ create table "openidinfo" ("id" VARCHAR NOT NULL PRIMARY KEY,"logininfoid" BIGIN
 create table "openidattributes" ("id" VARCHAR NOT NULL,"key" VARCHAR NOT NULL,"value" VARCHAR NOT NULL);
 
 
-create table "current" ("id" VARCHAR NOT NULL PRIMARY KEY, "userID" VARCHAR NOT NULL, "topic" VARCHAR NOT NULL, "startTime" LONG NOT NULL, "scheduledEndTime" LONG NOT NULL);
-create table "done" ("id" VARCHAR NOT NULL PRIMARY KEY, "userID" VARCHAR NOT NULL, "topic" VARCHAR NOT NULL, "startTime" LONG NOT NULL, "endTime" LONG NOT NULL, "succeeded" BOOLEAN NOT NULL);
+create table "current" ("id" VARCHAR NOT NULL PRIMARY KEY, "userID" VARCHAR NOT NULL, "topic" VARCHAR NOT NULL, "startTime" BIGINT NOT NULL, "scheduledEndTime" BIGINT NOT NULL);
+create table "done" ("id" VARCHAR NOT NULL PRIMARY KEY, "userID" VARCHAR NOT NULL, "topic" VARCHAR NOT NULL, "startTime" BIGINT NOT NULL, "endTime" BIGINT NOT NULL, "succeeded" BOOLEAN NOT NULL);
 
 # --- !Downs
 

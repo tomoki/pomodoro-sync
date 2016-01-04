@@ -5,6 +5,16 @@ var index = (function(){
   var changeStatus = function(text){
     $("#status").text(text);
   };
+  var formatFromSecond = function(second){
+    var minute = Math.max(0,Math.floor(second / 60));
+    var second = Math.max(0,Math.floor(second % 60));
+    var add_zero = function(s){
+      if(s.length == 1) return "0" + s;
+      else              return s;
+    };
+    return add_zero(minute + "") + ":" + add_zero(second + "");
+  };
+
   var button_callback = null;
   var changeButton = function(text, callback){
     var sbutton = $("#sbutton");
@@ -17,13 +27,21 @@ var index = (function(){
   };
   var check = function(){
     api.getCurrent(function(current){
-      if(current === null){
-        console.log("null");
-      } else if("error" in current){
-        console.log("error. already activated");
-      } else {
-      }
+      refreshDisplay(current);
     });
+  };
+  // TODO: use "patch" to reduce complexity.
+  var refreshDisplay = function(current, dones){
+    if(current === null){
+      changeButton("start", start);
+      // TODO: fixme. It depends on time constants.
+      changeTimer(formatFromSecond(60 * 25));
+    }else if("error" in current){
+      console.error(current);
+    }else{
+      changeButton("giveup", giveup);
+      changeTimer(formatFromSecond((current.scheduledEndTime - Date.now()) / 1000));
+    }
   };
   var start = function(){
     var message = $("#message").val();
@@ -37,14 +55,19 @@ var index = (function(){
   var giveup = function(){
     api.giveupCurrent(function(done){
     });
-  };  var notify = function(message){
+  };
+  var notify = function(message){
     Notification.requestPermission();
     var notification = new Notification(message);
   };
   changeButton("start", start);
+
   return {
     check: check,
     giveup: giveup,
     start: start
   };
 })();
+
+// TODO: We should use websocket.
+setInterval(index.check, 333);
