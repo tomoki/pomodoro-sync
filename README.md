@@ -8,7 +8,7 @@ This is pomodoro timer which can be synchronized over devices.
 ## Backend
 - [x] Rest APIs for get/giveup current task
 - [x] OAuth for register/signin 
-- [ ] Rest APIs for past works
+- [x] Rest APIs for past works
 - [ ] Rest APIs for rest time (interval time)
 - [ ] WebSocket APIs
 - [ ] Writing tests (thanks to DI, it is expected to be easy)
