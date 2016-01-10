@@ -123,4 +123,11 @@ class WorkAPIController @Inject() (
       case None       => Ok(errorJSON("There is no current job.").toString)
     }
   }
+  def getPastWorks = SecuredAction.async {
+    implicit request =>
+    val userID = request.identity.userID
+    val when   = System.currentTimeMillis
+    workService.getPastWorks(userID, when).map(
+      (dones: List[Done]) => Ok(Json.toJson(dones.map(done => toJSON(done))).toString))
+  }
 }

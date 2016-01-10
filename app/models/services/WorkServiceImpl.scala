@@ -15,4 +15,6 @@ class WorkServiceImpl @Inject() (workDAO: WorkDAO) extends WorkService {
     workDAO.updateCurrent(id, userID, topic, startTime, scheduledEndTime)
   def markCurrent(userID: UUID, succeeded: Boolean, when: Long) : Future[Option[Done]] =
     workDAO.markCurrent(userID, succeeded, when)
+  def getPastWorks(userID: UUID, when: Long) : Future[List[Done]] =
+    workDAO.getPastWorks(userID, when)
 }

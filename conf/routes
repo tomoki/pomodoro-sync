@@ -17,5 +17,6 @@ GET         /webjars/*file                   controllers.WebJarAssets.at(file)
 
 # works
 GET         /api_current                     controllers.WorkAPIController.current
+GET         /api_getPastWorks                controllers.WorkAPIController.getPastWorks
 POST        /api_updateCurrent               controllers.WorkAPIController.updateCurrent
 POST        /api_giveupCurrent               controllers.WorkAPIController.giveupCurrent

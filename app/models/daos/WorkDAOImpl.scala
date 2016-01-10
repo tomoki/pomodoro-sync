@@ -46,4 +46,15 @@ class WorkDAOImpl @Inject()(
       case None => Future.successful(None)
     }
   }
+  def getPastWorks(userID: UUID, when: Long) : Future[List[Done]] = {
+    val query = slickDones.filter(_.userID === userID.toString).sortBy(_.startTime)
+    db.run(query.result).map(dbdonelist =>
+      dbdonelist.map(dbdone =>
+        Done(UUID.fromString(dbdone.id),
+             UUID.fromString(dbdone.userID),
+             dbdone.topic,
+             dbdone.startTime,
+             dbdone.endTime,
+             dbdone.succeeded)).toList)
+    }
 }

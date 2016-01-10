@@ -13,9 +13,13 @@ var api = (function(){
     return $.post("api_giveupCurrent", {
     }, callback);
   };
+  var getPastWorks = function(callback){
+    return $.getJSON("api_getPastWorks", {}, callback);
+  };
   return {
     getCurrent: getCurrent,
     updateCurrent: updateCurrent,
-    giveupCurrent: giveupCurrent
+    giveupCurrent: giveupCurrent,
+    getPastWorks: getPastWorks
   };
 })();
