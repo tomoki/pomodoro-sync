@@ -3,20 +3,28 @@
 @scripts = {
  <script type="text/javascript" src="@routes.Assets.at("js/index.js")"></script>
 }
-@main(Messages("home.title"), user=Some(user), scripts=scripts) {
-  <h3><span id="status">Start new task!</span></h3>
-  <h1><span id="time">25:00</span></h1>
-  <input id="message" type="text">
-  <input id="sbutton" type="button" value="Start">
-  <table id="timeline" border="1"
-       bordercolor="#333333" cellspacing="0"
-       cellpadding="5" >
-    <tr>
-      <th>WHEN</th>
-      <th>AC?</th>
-      <th>TODO</th>
-    </tr>
-    <tr>
-    </tr>
-  </table>
+@styles = {
+ <link rel="stylesheet" href="@routes.Assets.at("styles/index.css")">
+}
+@main(Messages("home.title"), user=Some(user), scripts=scripts, styles=styles) {
+  <div><span id="status">Start new task!</span></div>
+  <div><span id="time">25:00</span></div>
+  <div class="react100" Id="message_button">
+    <input id="message" type="text">
+    <input id="sbutton" type="button" value="Start">
+  </div>
+  <table class="react100" id="timeline" border="1"
+         bordercolor="#333333" cellspacing="0"
+         cellpadding="5" >
+    <thead>
+      <tr>
+        <th id="acth">AC?</th>
+        <th>WHEN</th>
+
+        <th>TODO</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table
 }

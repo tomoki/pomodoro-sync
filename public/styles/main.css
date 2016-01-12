@@ -29,6 +29,10 @@ body {
     padding: 8px;
 }
 
+#acth {
+    width: 10px;
+}
+
 .provider {
     display: inline-block;
     width: 64px;

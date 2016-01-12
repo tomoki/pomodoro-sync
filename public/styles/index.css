@@ -1,0 +1,29 @@
+#time {
+    width: 400px;
+    font-size: 100px;
+}
+#sbutton {
+    width: 60px;
+}
+#message {
+    width: calc(360px - 60px);
+}
+.react100 {
+    width: 400px;
+    box-sizeing: border-box;
+}
+.readonly {
+    background-color: #EFEFEF;
+}
+@media screen and (max-width: 400px){
+    .react100 {
+        width: 100%;
+    }
+    #time {
+        width: 100%;
+        font-size: 25vw;
+    }
+    #message {
+        width: calc(90% - 60px);
+    }
+}

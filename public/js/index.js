@@ -1,10 +1,10 @@
-var index = (function(){
-  var changeTimer = function(text){
-    $("#time").text(text);
-  };
-  var changeStatus = function(text){
-    $("#status").text(text);
-  };
+var main = (function(){
+  var time     = $("#time");
+  var status   = $("#status");
+  var sbutton  = $("#sbutton");
+  var message  = $("#message");
+  var timeline = $("#timeline");
+
   var formatFromSecond = function(second){
     var minute = Math.max(0,Math.floor(second / 60));
     var second = Math.max(0,Math.floor(second % 60));
@@ -13,6 +13,24 @@ var index = (function(){
       else              return s;
     };
     return add_zero(minute + "") + ":" + add_zero(second + "");
+  };
+  var showInProgress = function(rest, topic){
+    sbutton.prop("disabled", false);
+    message.attr("readonly", true);
+    message.val(topic);
+    message.addClass("readonly");
+    status.text("Let's start new work!");
+    time.text(rest);
+    changeButton("giveup", giveup);
+  };
+
+  var showInRest = function(rest){
+    sbutton.prop("disabled", false);
+    message.attr("readonly", false);
+    message.removeClass("readonly");
+    status.text("Have a rest");
+    time.text(rest);
+    changeButton("start", start);
   };
 
   var button_callback = null;
@@ -25,27 +43,40 @@ var index = (function(){
     sbutton.val(text);
     sbutton.on("click", callback);
   };
+
   var check = function(){
-    api.getCurrent(function(current){
-      refreshDisplay(current);
-    });
+    api.getCurrent(refreshTime);
+    api.getPastWorks(refreshPastWorks);
   };
-  // TODO: use "patch" to reduce complexity.
-  var refreshDisplay = function(current, dones){
+
+  var refreshTime = function(current){
     if(current === null){
-      changeButton("start", start);
-      // TODO: fixme. It depends on time constants.
-      changeTimer(formatFromSecond(60 * 25));
-    }else if("error" in current){
-      console.error(current);
+      showInRest(formatFromSecond(60 * 25));
     }else{
-      changeButton("giveup", giveup);
-      changeTimer(formatFromSecond((current.scheduledEndTime - Date.now()) / 1000));
+      showInProgress(formatFromSecond((current.scheduledEndTime - Date.now()) / 1000),
+                     current.topic);
     }
   };
+
+  // TODO: should use patch.
+  var refreshPastWorks = function(works){
+    var tbody = timeline.find("tbody");
+    tbody.find("tr").remove();
+    works.forEach(function(work){
+      var row       = tbody[0].insertRow(0);
+      var ac_or_not = row.insertCell(0);
+      var date      = new Date(work.startTime);
+      ac_or_not.style.color           = "white";
+      ac_or_not.style.backgroundColor = work.succeeded ? "#458543" : "#F89406";
+      ac_or_not.textContent           = work.succeeded ? "YES" : "NO";
+      row.insertCell(1).textContent   = (date.getMonth()+1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+      row.insertCell(2).textContent   = work.topic;
+    });
+  };
+
+
   var start = function(){
-    var message = $("#message").val();
-    api.updateCurrent(message, function(current){
+    api.updateCurrent(message.val(), function(current){
       if(current.error !== undefined){
         console.log("error. already activated");
       }
@@ -56,18 +87,14 @@ var index = (function(){
     api.giveupCurrent(function(done){
     });
   };
+
   var notify = function(message){
     Notification.requestPermission();
     var notification = new Notification(message);
   };
-  changeButton("start", start);
 
   return {
-    check: check,
-    giveup: giveup,
-    start: start
+    check: check
   };
 })();
-
-// TODO: We should use websocket.
-setInterval(index.check, 333);
+setInterval(main.check, 333);
