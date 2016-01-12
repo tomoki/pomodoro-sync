@@ -1,18 +1,18 @@
 {
-  "name": "play-silhouette-slick-seed",
-  "description": "Seed project to show how Silhouette can be implemented into a Play Framework application with database access using Slick 3.",
+  "name": "pomodoro sync",
+  "description": "Pomodoro timer with sync.",
   "keywords": [
     "Play",
     "Silhouette",
     "Slick"
   ],
-  "website": "https://github.com/sbrunk/play-silhouette-slick-seed",
-  "repository": "https://github.com/sbrunk/play-silhouette-slick-seed",
+  "website": "https://github.com/tomoki/pomodoro-sync",
+  "repository": "https://github.com/tomoki/pomodoro-sync",
   "success_url": "/",
   "env": {
     "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-scala.git",
-    "PLAY_CONF_FILE": "application.prod.conf",
-    "PLAY_APP_SECRET": "changeme",
+    "PLAY_CONF_FILE": "application-prod.conf",
+    "PLAY_APP_SECRET": "changed_Test",
     "FACEBOOK_CLIENT_ID": "",
     "FACEBOOK_CLIENT_SECRET": "",
     "GOOGLE_CLIENT_ID": "",
