@@ -4,6 +4,9 @@ Pomodoro Timer with Synchronize
 # What's this?
 This is pomodoro timer which can be synchronized over devices.
 
+# Demo
+You can see the demo [here](https://pomodoro-sync.herokuapp.com/).
+
 # TODOs
 ## Backend
 - [x] Rest APIs for get/giveup current task
