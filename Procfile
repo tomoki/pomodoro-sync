@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/pomodoro-sync -Dhttp.port=${PORT} -Dconfig.resource=${PLAY_CONF_FILE}
+web: target/universal/stage/bin/pomodoro-sync -Dhttp.port=${PORT} -Dconfig.resource=${PLAY_CONF_FILE} -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=${DATABASE_URL}
